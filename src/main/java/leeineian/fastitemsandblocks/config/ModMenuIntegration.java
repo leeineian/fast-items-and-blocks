@@ -15,57 +15,57 @@ public class ModMenuIntegration implements ModMenuApi {
             YetAnotherConfigLib configLib = YetAnotherConfigLib.createBuilder()
                 .title(Component.literal("Fast Items and Blocks Settings"))
                 .category(ConfigCategory.createBuilder()
-                    .name(Component.literal("General"))
-                    .tooltip(Component.literal("Core configuration options for the mod."))
+                    .name(Component.literal("Fast Items and Blocks"))
                     .group(OptionGroup.createBuilder()
-                        .name(Component.literal("Rendering Options"))
+                        .name(Component.literal("Configurations"))
                         .option(Option.<FastItemsAndBlocksConfig.Direction>createBuilder()
-                            .name(Component.literal("Rotation Direction"))
-                            .description(OptionDescription.of(Component.literal("Controls how 2D items rotate to face the player.")))
+                            .name(Component.literal("Item Rotation Direction"))
+                            .description(OptionDescription.of(Component.literal("Vanilla: Keeps the default spinning behavior.\nFace screen: Faces the screen horizontally.\nFace camera: Fully faces the camera (horizontal + vertical).\nNone: Keeps a fixed orientation (no spin or facing).")))
                             .binding(
                                 Binding.generic(
-                                    FastItemsAndBlocksConfig.Direction.SCREEN_HORZ,
-                                    () -> FastItemsAndBlocksConfig.INSTANCE.direction,
-                                    value -> FastItemsAndBlocksConfig.INSTANCE.direction = value
+                                    FastItemsAndBlocksConfig.Direction.SCREEN,
+                                    () -> FastItemsAndBlocksConfig.INSTANCE.itemDirection,
+                                    value -> FastItemsAndBlocksConfig.INSTANCE.itemDirection = value
                                 )
                             )
                             .controller(option -> EnumControllerBuilder.create(option)
                                 .enumClass(FastItemsAndBlocksConfig.Direction.class)
-                                .formatValue(val -> Component.literal(val.name()))
+                                .formatValue(val -> switch (val) {
+                                    case SPIN -> Component.literal("Vanilla");
+                                    case SCREEN -> Component.literal("Face screen");
+                                    case CAMERA -> Component.literal("Face camera");
+                                    case STATIC -> Component.literal("Fixed");
+                                })
+                            )
+                            .build())
+                        .option(Option.<FastItemsAndBlocksConfig.Direction>createBuilder()
+                            .name(Component.literal("Block Rotation Direction"))
+                            .description(OptionDescription.of(Component.literal("Vanilla: Keeps the default spinning behavior.\nFace screen: Faces the screen horizontally.\nFace camera: Fully faces the camera (horizontal + vertical).\nNone: Keeps a fixed orientation (no spin or facing).")))
+                            .binding(
+                                Binding.generic(
+                                    FastItemsAndBlocksConfig.Direction.SCREEN,
+                                    () -> FastItemsAndBlocksConfig.INSTANCE.blockDirection,
+                                    value -> FastItemsAndBlocksConfig.INSTANCE.blockDirection = value
+                                )
+                            )
+                            .controller(option -> EnumControllerBuilder.create(option)
+                                .enumClass(FastItemsAndBlocksConfig.Direction.class)
+                                .formatValue(val -> switch (val) {
+                                    case SPIN -> Component.literal("Vanilla");
+                                    case SCREEN -> Component.literal("Face screen");
+                                    case CAMERA -> Component.literal("Face camera");
+                                    case STATIC -> Component.literal("Fixed");
+                                })
                             )
                             .build())
                         .option(Option.<Boolean>createBuilder()
-                            .name(Component.literal("Flat Models"))
-                            .description(OptionDescription.of(Component.literal("Strips the 3D extrusion quads of the items, rendering them flat.")))
+                            .name(Component.literal("Bobbing Animation"))
+                            .description(OptionDescription.of(Component.literal("Toggles the up-and-down bobbing animation for dropped items and blocks.")))
                             .binding(
                                 Binding.generic(
                                     true,
-                                    () -> FastItemsAndBlocksConfig.INSTANCE.flatModels,
-                                    value -> FastItemsAndBlocksConfig.INSTANCE.flatModels = value
-                                )
-                            )
-                            .controller(TickBoxControllerBuilder::create)
-                            .build())
-                        .option(Option.<Boolean>createBuilder()
-                            .name(Component.literal("Render Backside"))
-                            .description(OptionDescription.of(Component.literal("Draws the flipside texture on the back of flat items.")))
-                            .binding(
-                                Binding.generic(
-                                    false,
-                                    () -> FastItemsAndBlocksConfig.INSTANCE.renderBack,
-                                    value -> FastItemsAndBlocksConfig.INSTANCE.renderBack = value
-                                )
-                            )
-                            .controller(TickBoxControllerBuilder::create)
-                            .build())
-                        .option(Option.<Boolean>createBuilder()
-                            .name(Component.literal("Affect 3D Block Models"))
-                            .description(OptionDescription.of(Component.literal("Forces blocks rendered as items (e.g. grass blocks in hand) to also be flattened.")))
-                            .binding(
-                                Binding.generic(
-                                    false,
-                                    () -> FastItemsAndBlocksConfig.INSTANCE.affect3DModels,
-                                    value -> FastItemsAndBlocksConfig.INSTANCE.affect3DModels = value
+                                    () -> FastItemsAndBlocksConfig.INSTANCE.bobbingAnimation,
+                                    value -> FastItemsAndBlocksConfig.INSTANCE.bobbingAnimation = value
                                 )
                             )
                             .controller(TickBoxControllerBuilder::create)

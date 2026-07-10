@@ -18,10 +18,9 @@ public class FastItemsAndBlocksConfig {
 
     public static FastItemsAndBlocksConfig INSTANCE = new FastItemsAndBlocksConfig();
 
-    public Direction direction = Direction.SCREEN_HORZ;
-    public boolean flatModels = true;
-    public boolean renderBack = false;
-    public boolean affect3DModels = false;
+    public Direction itemDirection = Direction.SCREEN;
+    public Direction blockDirection = Direction.SCREEN;
+    public boolean bobbingAnimation = true;
 
     public List<String> exceptions = new ArrayList<>(Arrays.asList(
             "minecraft:decorated_pot",
@@ -46,7 +45,7 @@ public class FastItemsAndBlocksConfig {
     private transient List<Identifier> cachedExceptionIdentifiers = null;
 
     public enum Direction {
-        SCREEN_HORZ, CAMERA_HORZ, SPIN, SCREEN
+        SPIN, SCREEN, CAMERA, STATIC
     }
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
