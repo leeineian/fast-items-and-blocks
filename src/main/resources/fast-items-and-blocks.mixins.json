@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "leeineian.fastitemsandblocks.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"ItemEntityRendererMixin",
+		"ItemClusterRenderStateImpl",
+		"ItemStackRenderStateImpl"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
