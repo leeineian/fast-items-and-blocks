@@ -2,6 +2,7 @@
 .gradle/
 build/
 gradle/
+!gradle/wrapper/
 
 # IDE
 .idea/
